@@ -18,7 +18,9 @@ yargs(hideBin(process.argv))
         type: "string",
       });
     },
-    addFile,
+    (argv)=>{
+      addFile(argv.file);
+    },
   )
   .command("commit <message>", "Commit the changes", (yargs) => {
       yargs.positional("message", {
