@@ -18,23 +18,35 @@ yargs(hideBin(process.argv))
         type: "string",
       });
     },
-    (argv)=>{
+    (argv) => {
       addFile(argv.file);
     },
   )
-  .command("commit <message>", "Commit the changes", (yargs) => {
+  .command(
+    "commit <message>",
+    "Commit the changes",
+    (yargs) => {
       yargs.positional("message", {
         describe: "Commit message",
         type: "string",
       });
-    }, commitChanges)
+    },
+    (argv) => {
+      commitChanges(argv.message);
+    },
+  )
   .command("push", "Push the files to S3", {}, push)
   .command("pull", "Pull the commits from S3", {}, pull)
-  .command("revert <commitID>" , "Revert the changes" , (yargs) => {
+  .command(
+    "revert <commitID>",
+    "Revert the changes",
+    (yargs) => {
       yargs.positional("commitID", {
         describe: "Comit ID to revert to",
         type: "string",
       });
-    } , revert)
+    },
+    revert,
+  )
   .demandCommand(1, "You need atleast one command")
   .help().argv;
